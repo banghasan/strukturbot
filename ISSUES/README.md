@@ -30,3 +30,6 @@ Catatan perubahan project dipisahkan per issue agar mudah ditelusuri.
 | [024](./024-always-leave-after-chat-report-attempt.md) | Selalu keluar setelah percobaan report | Selesai |
 | [025](./025-document-upload-fallback.md) | Fallback report teks jika upload file gagal | Selesai |
 | [026](./026-webhook-sync-retry.md) | Retry webhook sync saat terkena rate limit | Selesai |
+| [027](./027-custom-emoji-chat-report-style.md) | Custom emoji untuk style report chat | Selesai |
+| [028](./028-custom-emoji-private-message-style.md) | Custom emoji untuk ringkasan private message | Selesai |
+| [029](./029-deploy-migration-flags.md) | Flag untuk konfirmasi migration deploy | Selesai |

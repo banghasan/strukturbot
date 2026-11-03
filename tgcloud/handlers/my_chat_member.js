@@ -10,6 +10,10 @@ function escapeHtml(value) {
     .replaceAll("'", '&#39;');
 }
 
+function customEmoji(id, fallback) {
+  return `<tg-emoji emoji-id="${id}">${fallback}</tg-emoji>`;
+}
+
 function isBotPresent(member) {
   if (!member) return false;
   if (member.status === 'member' || member.status === 'administrator' || member.status === 'creator') {
@@ -38,14 +42,14 @@ export default async function (update) {
     const language = await getUserLanguage(update.from);
     const title = chat.title ?? chat.username ?? '(tanpa title)';
     const text = [
-      `📑 ${tr(language, 'report')}`,
-      `  ├🗝 id: <code>${escapeHtml(chat.id)}</code>`,
-      `  ├⚜️ ${escapeHtml(title)}`,
-      `  └🗃 tipe: ${escapeHtml(chat.type)}`,
+      `${customEmoji('5402372957701946187', '📑')} ${tr(language, 'report')}`,
+      `  ├${customEmoji('5956267526630412170', '🗝')} id: <code>${escapeHtml(chat.id)}</code>`,
+      `  ├${customEmoji('5249053508681883137', '👤')} ${escapeHtml(title)}`,
+      `  └${customEmoji('5274102582585877844', '💬')} tipe: ${escapeHtml(chat.type)}`,
       '',
-      `🙏🏼 ${tr(language, 'permission')}`,
-      `  ├ 🤖 ${tr(language, 'reportBot')}`,
-      `  └ 🏃🏼‍♂️ ${tr(language, 'reportLeave')}`,
+      `${customEmoji('5247133031235329609', '👋')} ${tr(language, 'permission')}`,
+      `  ├ ${customEmoji('5854748376792305958', '🤖')} ${tr(language, 'reportBot')}`,
+      `  └ ${customEmoji('5368747224949857891', '🏃🏼‍♂️')} ${tr(language, 'reportLeave')}`,
     ].join('\n');
 
     const file = new InputFile(

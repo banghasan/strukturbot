@@ -140,7 +140,18 @@ Target juga dapat diberikan langsung:
 ```bash
 ./deploy.sh dev
 ./deploy.sh pro
+./deploy.sh dev --yes
+./deploy.sh dev --no
 ```
+
+Flag migration yang tersedia:
+
+- `--yes`, `-y`, `/y`: jalankan migration tanpa prompt.
+- `--no`, `-n`, `/n`: lewati migration tanpa prompt.
+- Tanpa flag: tanyakan keputusan setelah `migrate --dry-run`.
+
+Flag ini hanya mengatur migration. Konfirmasi production tetap wajib mengetik
+`PRODUCTION`.
 
 Jika credential target belum tersedia, script menawarkan `npx tgcloud login`.
 Deployment hanya dilanjutkan setelah login berhasil. Credential setiap target

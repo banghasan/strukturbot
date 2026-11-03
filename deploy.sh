@@ -11,6 +11,8 @@ Usage:
   ./deploy.sh          pilih target secara interaktif
   ./deploy.sh dev      deploy ke bot development
   ./deploy.sh pro      deploy ke bot production
+  ./deploy.sh dev -y   deploy dan jalankan migration tanpa prompt
+  ./deploy.sh dev -n   deploy dan lewati migration tanpa prompt
 EOF
 }
 
@@ -51,18 +53,44 @@ choose_target() {
   esac
 }
 
-case "${1:-}" in
-  --help|-h|help)
-    usage
-    exit 0
-    ;;
-  '')
-    target="$(choose_target)"
-    ;;
-  *)
-    target="$(choose_target "$1")"
-    ;;
-esac
+target_arg=''
+migration_choice='prompt'
+yes_flag=0
+no_flag=0
+
+for argument in "$@"; do
+  case "$argument" in
+    dev|DEV|development|DEVELOPMENT|pro|PRO|production|PRODUCTION)
+      if [[ -n "$target_arg" ]]; then
+        printf '%s\n' 'ERROR: target deployment ganda.' >&2
+        exit 1
+      fi
+      target_arg="$argument"
+      ;;
+    --yes|-y|/y) migration_choice='yes'; yes_flag=1 ;;
+    --no|-n|/n) migration_choice='no'; no_flag=1 ;;
+    --help|-h|help)
+      usage
+      exit 0
+      ;;
+    *)
+      printf 'ERROR: argumen tidak dikenal: %s\n' "$argument" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [[ "$yes_flag" -eq 1 && "$no_flag" -eq 1 ]]; then
+  printf '%s\n' 'ERROR: --yes dan --no tidak dapat digunakan bersamaan.' >&2
+  exit 1
+fi
+
+if [[ -z "$target_arg" ]]; then
+  target="$(choose_target)"
+else
+  target="$(choose_target "$target_arg")"
+fi
 
 case "$target" in
   dev) target_label='DEVELOPMENT'; state_dir='.tgcloud-dev' ;;
@@ -133,9 +161,17 @@ sync_webhook
 printf '\n[%s] Memeriksa migration...\n' "$target_label"
 npx tgcloud migrate --dry-run
 
-printf '\nJalankan migration sekarang? [y/N]: '
-read -r migrate_choice
-if [[ "$migrate_choice" =~ ^[Yy]$ ]]; then
+if [[ "$migration_choice" == 'prompt' ]]; then
+  printf '\nJalankan migration sekarang? [y/N]: '
+  read -r migrate_answer
+  if [[ "$migrate_answer" =~ ^[Yy]$ ]]; then
+    migration_choice='yes'
+  else
+    migration_choice='no'
+  fi
+fi
+
+if [[ "$migration_choice" == 'yes' ]]; then
   npx tgcloud migrate
 else
   printf '%s\n' 'Migration dilewati.'

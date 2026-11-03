@@ -21,6 +21,10 @@ function escapeHtml(value) {
     .replaceAll("'", '&#39;');
 }
 
+function customEmoji(id, fallback) {
+  return `<tg-emoji emoji-id="${id}">${fallback}</tg-emoji>`;
+}
+
 function withPrettyJson(url) {
   return `${url}${url.includes('?') ? '&' : '?'}pretty=true`;
 }
@@ -91,7 +95,7 @@ function formatPhotoDetails(message, lang) {
 
   return [
     `📸 ${tr(lang, 'photoLargest')}`,
-    `  ├⚖️ ${size}`,
+    `  ├${customEmoji('5877618313139327986', '📝')} ${size}`,
     `  └📐 <code>${photo.width ?? '-'} x ${photo.height ?? '-'}</code> ${tr(lang, 'pixel')}`,
   ];
 }
@@ -106,10 +110,10 @@ function formatDocumentDetails(message, lang) {
     : '<code>-</code> KB (<code>-</code> byte)';
 
   return [
-    `📦 ${tr(lang, 'document')}`,
-    `  ├📎 <code>${escapeHtml(document.file_name ?? '(tanpa nama file)')}</code>`,
+    `${customEmoji('5854908544712707500', '📦')} ${tr(lang, 'document')}`,
+    `  ├${customEmoji('5915834902074364776', '☁️')} <code>${escapeHtml(document.file_name ?? '(tanpa nama file)')}</code>`,
     `  ├🔖 ${escapeHtml(document.mime_type ?? '(tipe tidak diketahui)')}`,
-    `  └⚖️ ${size}`,
+    `  └${customEmoji('5877618313139327986', '📝')} ${size}`,
   ];
 }
 
@@ -153,12 +157,12 @@ function formatAnimationDetails(message, lang) {
 
   return [
     `🧬 ${tr(lang, 'animation')}`,
-    `  ├📎 ${escapeHtml(animation.file_name ?? '(tanpa nama file)')}`,
+    `  ├${customEmoji('5915834902074364776', '☁️')} ${escapeHtml(animation.file_name ?? '(tanpa nama file)')}`,
     `  ├🗃 ${getResolutionLabel(animation.width, animation.height, lang)}`,
     `  ├🔖 ${escapeHtml(animation.mime_type ?? '(tipe tidak diketahui)')}`,
     `  ├📐 <code>${animation.width ?? '-'} x ${animation.height ?? '-'}</code> ${tr(lang, 'pixel')}`,
-    `  ├⏱️ <code>${duration.clock}</code> (<code>${duration.value}</code> ${tr(lang, 'seconds')})`,
-    `  └⚖️ ${size}`,
+    `  ├${customEmoji('5262540380301191210', '⏱️')} <code>${duration.clock}</code> (<code>${duration.value}</code> ${tr(lang, 'seconds')})`,
+    `  └${customEmoji('5877618313139327986', '📝')} ${size}`,
   ];
 }
 
@@ -174,12 +178,12 @@ function formatVideoDetails(message, lang) {
 
   return [
     `🎥 ${tr(lang, 'video')}`,
-    `  ├📎 ${escapeHtml(video.file_name ?? '(tanpa nama file)')}`,
+    `  ├${customEmoji('5915834902074364776', '☁️')} ${escapeHtml(video.file_name ?? '(tanpa nama file)')}`,
     `  ├🗃 ${getResolutionLabel(video.width, video.height, lang)}`,
     `  ├🔖 ${escapeHtml(video.mime_type ?? '(tipe tidak diketahui)')}`,
     `  ├📐 <code>${video.width ?? '-'} x ${video.height ?? '-'}</code> ${tr(lang, 'pixel')}`,
-    `  ├⏱️ <code>${duration.clock}</code> (<code>${duration.value}</code> ${tr(lang, 'seconds')})`,
-    `  └⚖️ ${size}`,
+    `  ├${customEmoji('5262540380301191210', '⏱️')} <code>${duration.clock}</code> (<code>${duration.value}</code> ${tr(lang, 'seconds')})`,
+    `  └${customEmoji('5877618313139327986', '📝')} ${size}`,
   ];
 }
 
@@ -195,8 +199,8 @@ function formatVideoNoteDetails(message, lang) {
 
   return [
     `🎞 ${tr(lang, 'videoNote')}`,
-    `  ├⏱️ <code>${duration.clock}</code> (<code>${duration.value}</code> ${tr(lang, 'seconds')})`,
-    `  └⚖️ ${size}`,
+    `  ├${customEmoji('5262540380301191210', '⏱️')} <code>${duration.clock}</code> (<code>${duration.value}</code> ${tr(lang, 'seconds')})`,
+    `  └${customEmoji('5877618313139327986', '📝')} ${size}`,
   ];
 }
 
@@ -258,23 +262,23 @@ function formatSummary(message, lang) {
   const forwardOrigin = getForwardOrigin(message);
 
   const lines = [
-    `🧢 ${tr(lang, 'from')} ${sender.id != null ? `<code>${escapeHtml(sender.id)}</code>` : `(${tr(lang, 'unknown')})`}`,
-    ...(username ? [`  ├👤 ${escapeHtml(username)}`] : []),
-    `  └🙋🏽 ${escapeHtml(displayName)}`,
+    `${customEmoji('5256143829672672750', '👤')} ${tr(lang, 'from')} ${sender.id != null ? `<code>${escapeHtml(sender.id)}</code>` : `(${tr(lang, 'unknown')})`}`,
+    ...(username ? [`  ├${customEmoji('5346136537123801643', '👤')} ${escapeHtml(username)}`] : []),
+    `  └${customEmoji('5336809689223021530', '🙋🏽')} ${escapeHtml(displayName)}`,
   ];
 
   if (characterCount > 0) {
-    lines.push('', `📄 ${content.label}`, `  └📏️ <code>${characterCount}</code> ${tr(lang, 'char')}`);
+    lines.push('', `${customEmoji('5370604433233177619', '📄')} ${content.label}`, `  └${customEmoji('5343545160015829015', '📏️')} <code>${characterCount}</code> ${tr(lang, 'char')}`);
   }
 
   if (entityCount > 0) {
-    lines.push('', `📮 ${tr(lang, 'entity')}: <code>${entityCount}</code>${tr(lang, 'entityUnit') ? ` ${tr(lang, 'entityUnit')}` : ''}`);
+    lines.push('', `${customEmoji('5988014288499903889', '💌')} ${tr(lang, 'entity')}: <code>${entityCount}</code>${tr(lang, 'entityUnit') ? ` ${tr(lang, 'entityUnit')}` : ''}`);
   }
 
   if (customEmoji) {
     lines.push(
       '',
-      `📡 ${tr(lang, 'customEmoji')}`,
+      `${customEmoji('5321141214735508486', '📡')} ${tr(lang, 'customEmoji')}`,
       `  ├ ${tr(lang, 'textLabel')}: ${escapeHtml(customEmoji.text)}`,
       `  └ ${tr(lang, 'idLabel')}: <code>${escapeHtml(customEmoji.id)}</code>`,
     );
@@ -301,13 +305,13 @@ function formatSummary(message, lang) {
   }
 
   if (forwardOrigin) {
-    lines.push('', `💬 ${tr(lang, 'forwardOrigin')}`, `  ├🗝 ${tr(lang, 'idLabel')}: <code>${escapeHtml(forwardOrigin.id)}</code>`);
+    lines.push('', `${customEmoji('5443038326535759644', '💬')} ${tr(lang, 'forwardOrigin')}`, `  ├${customEmoji('5956267526630412170', '🗝')} ${tr(lang, 'idLabel')}: <code>${escapeHtml(forwardOrigin.id)}</code>`);
     if (forwardOrigin.username) {
-      lines.push(`  ├💁🏼 ${escapeHtml(forwardOrigin.fullName)}`, `  ├👤 ${escapeHtml(forwardOrigin.username)}`);
+      lines.push(`  ├💁🏼 ${escapeHtml(forwardOrigin.fullName)}`, `  ├${customEmoji('5346136537123801643', '👤')} ${escapeHtml(forwardOrigin.username)}`);
     } else {
       lines.push(`  ├💁🏼 ${escapeHtml(forwardOrigin.fullName)}`);
     }
-    lines.push(`  └⏱️ ${escapeHtml(forwardOrigin.time)}`);
+    lines.push(`  └${customEmoji('5262540380301191210', '⏱️')} ${escapeHtml(forwardOrigin.time)}`);
   }
 
   return lines.join('\n');
