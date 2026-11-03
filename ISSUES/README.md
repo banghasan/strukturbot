@@ -23,4 +23,6 @@ Catatan perubahan project dipisahkan per issue agar mudah ditelusuri.
 | [017](./017-video-note-and-media-selection-rule.md) | Detail video note dan rule media terbesar | Selesai |
 | [018](./018-video-details-with-caption.md) | Detail video tetap tampil bersama caption | Selesai |
 | [019](./019-bilingual-responses.md) | Respons bilingual berdasarkan bahasa user | Selesai |
-| [020](./020-interactive-dev-production-deploy.md) | Deployment interaktif dev/production | Direncanakan |
+| [020](./020-interactive-dev-production-deploy.md) | Deployment interaktif dev/production | Selesai |
+| [021](./021-persistent-chat-report-file.md) | Report join sebagai file JSON Telegram | Selesai |
+| [022](./022-single-document-report-caption.md) | Report dan JSON dalam satu message | Selesai |

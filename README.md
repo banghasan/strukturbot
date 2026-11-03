@@ -6,6 +6,9 @@ Bot ini meneruskan setiap `message` Telegram sebagai JSON ke:
 POST https://data.banghasan.com/json
 ```
 
+Endpoint `data.banghasan.com` yang digunakan project ini berasal dari project
+[banghasan/json-crud-server](https://github.com/banghasan/json-crud-server).
+
 Header `Authorization` diambil dari `BANGHASAN_AUTH_HEADER` pada `.env` saat proses persiapan deployment.
 
 ## Credential
@@ -96,6 +99,17 @@ npx tgcloud migrate
 
 Informasi media tetap ditampilkan meskipun message juga memiliki caption,
 forward origin, atau metadata lain.
+
+## Report saat masuk grup atau channel
+
+Saat bot ditambahkan ke grup, supergroup, atau channel, bot mengirim satu
+message berupa `telegram-chat-report.txt`. Report ditampilkan sebagai caption,
+sedangkan file berisi update Telegram dalam format JSON pretty. Report ini
+tidak lagi memakai inline button ke `data.banghasan.com`, sehingga tidak
+bergantung pada retensi API tujuh hari.
+
+Setelah request pengiriman selesai—berhasil maupun gagal—bot tetap mencoba
+keluar dari chat.
 
 ## Strategi deployment dev dan production
 

@@ -1,8 +1,5 @@
-import { api, fetch } from 'sdk';
-import { BANGHASAN_AUTH_HEADER } from '../lib/config.js';
+import { api, InputFile } from 'sdk';
 import { getUserLanguage, tr } from '../lib/language.js';
-
-const DATA_API_URL = 'https://data.banghasan.com/json';
 
 function escapeHtml(value) {
   return String(value)
@@ -20,10 +17,6 @@ function isBotPresent(member) {
   }
 
   return member.status === 'restricted' && member.is_member === true;
-}
-
-function withPrettyJson(url) {
-  return `${url}${url.includes('?') ? '&' : '?'}pretty=true`;
 }
 
 export default async function (update) {
@@ -47,45 +40,31 @@ export default async function (update) {
     `  └ 🏃🏼‍♂️ ${tr(language, 'reportLeave')}`,
   ].join('\n');
 
-  let jsonUrl = null;
-  if (BANGHASAN_AUTH_HEADER) {
-    const response = await fetch(DATA_API_URL, {
-      method: 'POST',
-      headers: {
-        Authorization: BANGHASAN_AUTH_HEADER,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(update),
-    });
+  const file = new InputFile(
+    new TextEncoder().encode(JSON.stringify(update, null, 2)),
+    'telegram-chat-report.txt',
+    { type: 'text/plain' },
+  );
 
-    if (response.ok) {
-      const saved = await response.json();
-      const savedUrl =
-        typeof saved?.url === 'string'
-          ? saved.url
-          : saved?.id
-            ? `${DATA_API_URL}/${encodeURIComponent(saved.id)}`
-            : null;
-      jsonUrl = savedUrl ? withPrettyJson(savedUrl) : null;
-    } else {
-      console.warn('Could not save chat-join update for the report button', response.status);
+  try {
+    // One Telegram message: the report is the document caption and the full
+    // update is attached as a durable text file.
+    await api.sendDocument({
+      chat_id: chat.id,
+      document: file,
+      caption: text,
+      parse_mode: 'HTML',
+    });
+  } catch (error) {
+    console.warn('Could not send the chat report document', error);
+  } finally {
+    // Leaving is attempted regardless of whether Telegram accepted the file.
+    try {
+      await api.leaveChat({ chat_id: chat.id });
+    } catch (error) {
+      console.error('Could not leave chat after sending the report', error);
     }
   }
 
-  // Leave only after Telegram confirms the report message was sent.
-  await api.sendMessage({
-    chat_id: chat.id,
-    text,
-    parse_mode: 'HTML',
-    ...(jsonUrl
-      ? {
-          reply_markup: {
-            inline_keyboard: [[{ text: '📄 json', url: jsonUrl }]],
-          },
-        }
-      : {}),
-  });
-
-  await api.leaveChat({ chat_id: chat.id });
   console.log('Bot reported and left chat', { chatId: chat.id, type: chat.type });
 }
