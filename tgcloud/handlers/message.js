@@ -253,7 +253,7 @@ function formatSummary(message, lang) {
   const content = getMessageText(message, lang);
   const entityCount = (message.entities ?? message.caption_entities ?? []).length;
   const characterCount = Array.from(content.value).length;
-  const customEmoji = getSingleCustomEmoji(message);
+  const singleCustomEmoji = getSingleCustomEmoji(message);
   const photoDetails = formatPhotoDetails(message, lang);
   const documentDetails = formatDocumentDetails(message, lang);
   const animationDetails = formatAnimationDetails(message, lang);
@@ -275,12 +275,12 @@ function formatSummary(message, lang) {
     lines.push('', `${customEmoji('5988014288499903889', '💌')} ${tr(lang, 'entity')}: <code>${entityCount}</code>${tr(lang, 'entityUnit') ? ` ${tr(lang, 'entityUnit')}` : ''}`);
   }
 
-  if (customEmoji) {
+  if (singleCustomEmoji) {
     lines.push(
       '',
       `${customEmoji('5321141214735508486', '📡')} ${tr(lang, 'customEmoji')}`,
-      `  ├ ${tr(lang, 'textLabel')}: ${escapeHtml(customEmoji.text)}`,
-      `  └ ${tr(lang, 'idLabel')}: <code>${escapeHtml(customEmoji.id)}</code>`,
+      `  ├ ${tr(lang, 'textLabel')}: ${escapeHtml(singleCustomEmoji.text)}`,
+      `  └ ${tr(lang, 'idLabel')}: <code>${escapeHtml(singleCustomEmoji.id)}</code>`,
     );
   }
 

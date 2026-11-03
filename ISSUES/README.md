@@ -33,3 +33,6 @@ Catatan perubahan project dipisahkan per issue agar mudah ditelusuri.
 | [027](./027-custom-emoji-chat-report-style.md) | Custom emoji untuk style report chat | Selesai |
 | [028](./028-custom-emoji-private-message-style.md) | Custom emoji untuk ringkasan private message | Selesai |
 | [029](./029-deploy-migration-flags.md) | Flag untuk konfirmasi migration deploy | Selesai |
+| [030](./030-fix-custom-emoji-name-collision.md) | Memperbaiki collision nama custom emoji | Selesai |
+| [031](./031-documentation-structure-refactor.md) | Merapikan struktur dokumentasi | Selesai |
+| [032](./032-support-group-information.md) | Menambahkan informasi grup dukungan | Selesai |
