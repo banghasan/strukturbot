@@ -1,0 +1,25 @@
+# Telegram Serverless local state and credentials
+.tgcloud
+.tgcloud-dev/
+.tgcloud-pro/
+
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Generated configuration containing the API credential
+tgcloud/lib/config.js
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS/editor files
+.DS_Store
+Thumbs.db

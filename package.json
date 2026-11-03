@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "prepare:serverless": "node scripts/prepare-serverless.mjs",
+    "deploy": "./deploy.sh",
+    "migrate": "npx tgcloud migrate",
+    "run:message": "npm run prepare:serverless && npx tgcloud run handlers/message"
+  },
+  "devDependencies": {
+    "@tgcloud/cli": "^0.2.0"
+  }
+}
