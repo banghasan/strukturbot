@@ -111,6 +111,9 @@ bergantung pada retensi API tujuh hari.
 Setelah request pengiriman selesai—berhasil maupun gagal—bot tetap mencoba
 keluar dari chat.
 
+Jika pengiriman file gagal, bot menggunakan report teks sebagai fallback agar
+informasi tetap dikirim seperti perilaku sebelumnya.
+
 ## Strategi deployment dev dan production
 
 Project menggunakan satu source code dengan dua state Telegram Serverless:

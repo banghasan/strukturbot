@@ -26,3 +26,7 @@ Catatan perubahan project dipisahkan per issue agar mudah ditelusuri.
 | [020](./020-interactive-dev-production-deploy.md) | Deployment interaktif dev/production | Selesai |
 | [021](./021-persistent-chat-report-file.md) | Report join sebagai file JSON Telegram | Selesai |
 | [022](./022-single-document-report-caption.md) | Report dan JSON dalam satu message | Selesai |
+| [023](./023-interactive-deploy-menu-fix.md) | Memperbaiki menu interaktif deploy | Selesai |
+| [024](./024-always-leave-after-chat-report-attempt.md) | Selalu keluar setelah percobaan report | Selesai |
+| [025](./025-document-upload-fallback.md) | Fallback report teks jika upload file gagal | Selesai |
+| [026](./026-webhook-sync-retry.md) | Retry webhook sync saat terkena rate limit | Selesai |
